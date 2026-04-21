@@ -37,6 +37,7 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
         textColor: "#6e6357",
         fontSize: 10,
         fontFamily: "IBM Plex Mono, monospace",
+        attributionLogo: false,
       },
       grid: {
         vertLines: { color: "#1e1b19" },
