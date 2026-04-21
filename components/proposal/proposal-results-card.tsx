@@ -8,7 +8,7 @@ export function ProposalResultsCard({ proposal }: { proposal: Proposal }) {
     <div className="flex flex-col items-start">
       {/* Header */}
       <div className="flex h-[76px] items-start py-6 w-full">
-        <span className="flex-1 text-[20px] text-[#f7e7d3] leading-7">
+        <span className="flex-1 text-[18px] text-[#f7e7d3] leading-7">
           Proposal results
         </span>
       </div>
@@ -17,12 +17,12 @@ export function ProposalResultsCard({ proposal }: { proposal: Proposal }) {
       <div className="flex flex-col w-full">
         {/* Column headers */}
         <div className={`${colClass} border-b border-[#312d2a] py-[5px]`}>
-          <span className="text-[14px] text-[#a99986] leading-[15px] tracking-[1px] uppercase whitespace-nowrap py-3">
+          <span className="text-[12px] text-[#a99986] leading-[15px] tracking-[1px] uppercase whitespace-nowrap py-3">
             P2P-USDC
           </span>
-          <span className="text-[14px] text-[#a99986] leading-5 text-left whitespace-nowrap">%</span>
-          <span className="text-[14px] text-[#a99986] leading-5 text-left whitespace-nowrap">Price</span>
-          <span className="text-[14px] text-[#a99986] leading-5 text-left whitespace-nowrap">Market cap</span>
+          <span className="text-[12px] text-[#a99986] leading-5 text-left whitespace-nowrap">%</span>
+          <span className="text-[12px] text-[#a99986] leading-5 text-left whitespace-nowrap">Price</span>
+          <span className="text-[12px] text-[#a99986] leading-5 text-left whitespace-nowrap">Market cap</span>
         </div>
 
         {/* Rows */}

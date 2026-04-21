@@ -40,8 +40,8 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
         attributionLogo: false,
       },
       grid: {
-        vertLines: { color: "#1e1b19" },
-        horzLines: { color: "#1e1b19" },
+        vertLines: { visible: false },
+        horzLines: { visible: false },
       },
       rightPriceScale: { borderColor: "#312d2a", textColor: "#6e6357" },
       timeScale: { borderColor: "#312d2a", timeVisible: true, secondsVisible: false },
@@ -57,12 +57,14 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
       lineWidth: 2,
       priceLineVisible: false,
       lastValueVisible: false,
+      crosshairMarkerBorderWidth: 0,
     });
     const failSeries = chart.addSeries(LineSeries, {
       color: "#f7567c",
       lineWidth: 2,
       priceLineVisible: false,
       lastValueVisible: false,
+      crosshairMarkerBorderWidth: 0,
     });
     const spotSeries = chart.addSeries(LineSeries, {
       color: "#ffe5d9",
@@ -70,6 +72,7 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
       lineStyle: 2,
       priceLineVisible: false,
       lastValueVisible: false,
+      crosshairMarkerBorderWidth: 0,
     });
 
     passSeries.setData(toLineData(passData));
@@ -109,7 +112,7 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
     <div className="flex flex-col items-start">
       {/* Header */}
       <div className="flex h-[76px] items-center justify-between py-6 w-full">
-        <span className="text-[20px] text-[#f7e7d3] leading-7 whitespace-nowrap">
+        <span className="text-[18px] text-[#f7e7d3] leading-7 whitespace-nowrap">
           Proposal trading
         </span>
         <span className="text-[12px] text-[#a99986] leading-[18px] text-center whitespace-nowrap">
@@ -124,7 +127,7 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
       <div className="flex gap-[15px] items-center px-px py-[5px] w-full">
         <div className="flex gap-[6px] items-center py-3 rounded-[4px]">
           <div className="bg-[#8aea92] size-[6px] shrink-0" />
-          <span className="text-[14px] text-[#a99986] leading-none whitespace-nowrap">
+          <span className="text-[12px] text-[#a99986] leading-none whitespace-nowrap">
             <span className="font-['IBM_Plex_Mono',monospace] font-medium text-[#8aea92]">
               ${lastPass?.close.toFixed(4)}
             </span>
@@ -133,7 +136,7 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
         </div>
         <div className="flex gap-[6px] items-center py-3 rounded-[4px]">
           <div className="bg-[#f7567c] size-[6px] shrink-0" />
-          <span className="text-[14px] text-[#a99986] leading-none whitespace-nowrap">
+          <span className="text-[12px] text-[#a99986] leading-none whitespace-nowrap">
             <span className="font-['IBM_Plex_Mono',monospace] font-medium text-[#f7567c]">
               {lastFail?.close.toFixed(4)}
             </span>
@@ -142,7 +145,7 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
         </div>
         <div className="flex gap-[6px] items-center py-3 rounded-[4px]">
           <div className="bg-[#ffe5d9] size-[6px] shrink-0" />
-          <span className="text-[14px] text-[#a99986] leading-none whitespace-nowrap">
+          <span className="text-[12px] text-[#a99986] leading-none whitespace-nowrap">
             <span className="font-['IBM_Plex_Mono',monospace] font-medium text-[#ffe5d9]">
               {lastSpot?.close.toFixed(4)}
             </span>

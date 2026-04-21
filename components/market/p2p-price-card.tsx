@@ -9,12 +9,12 @@ export function P2PPriceCard({ icoPrice, currentMarketPrice }: Props) {
       {/* Header */}
       <div className="flex h-[76px] items-center justify-between py-6 w-full">
         <div className="flex gap-[9px] items-center">
-          <span className="text-[20px] text-[#f7e7d3] leading-7 whitespace-nowrap">
+          <span className="text-[18px] text-[#f7e7d3] leading-7 whitespace-nowrap">
             P2P price
           </span>
-          <div className="border border-[#8aea92] flex gap-[6px] items-center px-[9px] py-[6px] rounded-[21px]">
+          <div className="border border-[#8aea92] flex gap-[5px] items-center px-[7px] py-[4px] rounded-[21px]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/assets/icon-live.svg" alt="" width={11} height={16} />
+            <img src="/assets/icon-live.svg" alt="" width={10} height={14} />
             <span className="font-medium text-[12px] text-[#8aea92] leading-[15px] tracking-[1px] uppercase whitespace-nowrap">
               LIVE
             </span>
@@ -31,13 +31,13 @@ export function P2PPriceCard({ icoPrice, currentMarketPrice }: Props) {
         <div className="border-b border-[#312d2a] w-full">
           <div className="flex items-center justify-between px-px py-[5px]">
             <div className="flex items-center py-3 rounded-[4px]">
-              <span className="text-[14px] text-[#a99986] leading-[15px] whitespace-nowrap">
+              <span className="text-[12px] text-[#a99986] leading-[15px] whitespace-nowrap">
                 ICO price
               </span>
             </div>
             <div className="flex items-center w-[265px]">
               <div className="flex h-[42px] items-center w-[92px]">
-                <span className="text-[14px] text-[#a99986] leading-5 text-center whitespace-nowrap">
+                <span className="text-[12px] text-[#a99986] leading-5 text-center whitespace-nowrap">
                   Current market price
                 </span>
               </div>

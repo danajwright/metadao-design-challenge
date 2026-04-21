@@ -5,13 +5,13 @@ import remarkGfm from "remark-gfm";
 
 export function ProposalContent({ markdown }: { markdown: string }) {
   return (
-    <div className="flex flex-col gap-6 items-start py-[18px]">
+    <div className="flex flex-col gap-2 items-start py-[18px]">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
           h3({ children, ...props }) {
             return (
-              <div className="flex flex-col gap-1 items-start justify-center w-full">
+              <div className="flex flex-col gap-1 items-start justify-center w-full mt-5 first:mt-0">
                 <h3
                   {...props}
                   className="font-semibold text-[16px] text-[#f4e4cf] leading-5 whitespace-nowrap"
@@ -25,7 +25,7 @@ export function ProposalContent({ markdown }: { markdown: string }) {
             return (
               <p
                 {...props}
-                className="text-[14px] text-[#a99986] leading-[22.75px] w-full"
+                className="text-[12px] text-[#a99986] leading-[22.75px] w-full"
               >
                 {children}
               </p>
@@ -49,7 +49,7 @@ export function ProposalContent({ markdown }: { markdown: string }) {
             return (
               <li
                 {...props}
-                className="text-[14px] text-[#a99986] leading-[22.75px] list-disc ml-5"
+                className="text-[12px] text-[#a99986] leading-[22.75px] list-disc ml-5"
               >
                 {children}
               </li>

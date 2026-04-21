@@ -24,7 +24,7 @@ export default function ProposalPage() {
         <div className="w-full max-w-[1350px] mx-auto flex flex-col flex-1 min-h-0">
           {/* Top header bar */}
           <div className="flex items-start pl-6 py-6 shrink-0">
-            <span className="flex-1 text-[20px] text-[#f7e7d3] leading-7">Overview</span>
+            <span className="flex-1 text-[18px] text-[#f7e7d3] leading-7">Overview</span>
             <div className="flex gap-2 items-center pr-6">
               {/* Token price */}
               <div className="rounded-[4.8px] px-2 py-1">
@@ -33,7 +33,7 @@ export default function ProposalPage() {
                 </span>
               </div>
               {/* Wallet button */}
-              <div className="bg-[#1a1a1a] rounded-[4.8px] h-9 w-[108px] flex items-center px-3 relative">
+              <div className="bg-[#1a1a1a] rounded-[4.8px] h-9 w-[108px] flex items-center px-3 relative hover:bg-[#2e2924] cursor-pointer transition-colors duration-150 ease-in-out">
                 <span className="text-[12px] text-[#b3afac] leading-[18px] text-center flex-1">
                   8Cw...dhq
                 </span>
@@ -41,22 +41,23 @@ export default function ProposalPage() {
                 <img src="/assets/icon-chevron.svg" alt="" width={12} height={12} />
               </div>
               {/* Theme toggle */}
-              <div className="bg-[#1a1a1a] rounded-[4.8px] size-9 flex items-center justify-center">
-                <span className="text-[#a99986] text-sm">☀</span>
+              <div className="bg-[#1a1a1a] rounded-[4.8px] size-9 flex items-center justify-center hover:bg-[#2e2924] cursor-pointer transition-colors duration-150 ease-in-out">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/assets/light-mode2.svg" alt="Toggle light mode" width={16} height={16} />
               </div>
             </div>
           </div>
 
           {/* Two-column content */}
-          <div className="flex items-start flex-1 min-h-0 overflow-hidden">
+          <div className="flex items-stretch flex-1 min-h-0 overflow-hidden">
             {/* Left column — scrollable */}
-            <div className="flex-1 min-w-0 overflow-y-auto pl-6 pr-12 flex flex-col gap-[9px]">
+            <div className="flex-1 min-w-0 overflow-y-auto pl-6 pr-6 pb-8 flex flex-col gap-[9px]">
               <ProposalHeader proposal={proposal} />
               <ProposalContent markdown={proposal.proposalMarkdown} />
             </div>
 
             {/* Right column — scrollable, 472px */}
-            <div className="w-[472px] shrink-0 overflow-y-auto flex flex-col gap-[18px] pr-6 pb-8">
+            <div className="w-[472px] shrink-0 overflow-y-auto flex flex-col gap-[18px] pl-6 pr-6 pb-8">
               <P2PPriceCard
                 icoPrice={proposal.icoPrice}
                 currentMarketPrice={proposal.currentMarketPrice}
