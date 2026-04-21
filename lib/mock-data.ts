@@ -29,10 +29,7 @@ export const MOCK_PROPOSAL: Proposal = {
   },
   spotPrice: 0.5364,
   spotMarketCap: 13800000,
-  proposalMarkdown: `**Type:** Operations Direct Action
-**Author(s):** P2P Team
-
-### Summary
+  proposalMarkdown: `### Summary
 
 If passed, up to $500,000 USDC of operational funds will be used to purchase P2P tokens at prices up to $0.55 per token over a period of 30 days. All acquired P2P will be transferred to the project treasury.
 
@@ -40,20 +37,21 @@ If passed, up to $500,000 USDC of operational funds will be used to purchase P2P
 
 Since TGE, P2P has been trading below the ICO price of $0.60. With the token trading at a discount to its initial offering price, the project has an opportunity to acquire P2P at accretive terms, strengthening the treasury position while demonstrating long term conviction in what we are building.
 
-This buyback serves three purposes:
+### Purpose of the buyback
 
-1. **Accretive acquisition.** Buying below ICO price means the project acquires tokens at a discount to what early participants paid. This is capital efficient treasury management.
+This buyback will serve three purposes:
 
-2. **Alignment signal.** A structured buyback backed by operational funds demonstrates that the team stands behind the project's fundamentals and long term value.
+- **Accretive acquisition:** Buying below ICO price means the project acquires tokens at a discount to what early participants paid. This is capital efficient treasury management.
 
-3. **Ecosystem reserve building.** Acquired tokens create a reserve that can be deployed for future incentive programs, strategic partnerships, or burns, all subject to governance approval.
+- **Alignment signal:** A structured buyback backed by operational funds demonstrates that the team stands behind the project's fundamentals and long term value.
 
-This allocation does not impair ongoing operations or development runway. The funds are drawn from the project's operational liquidity budget specifically earmarked for market health activities.
+- **Ecosystem reserve building:** Acquired tokens create a reserve that can be deployed for future incentive programs, strategic partnerships, or burns, all subject to governance approval.
 
-### Price Calculation
+### Buyback funding
 
-ICO Price: $0.60 per P2P
-Current Market Price: $0.40 per P2P`,
+Funds for the buyback are SAFU.
+
+This allocation does not impair ongoing operations or development runway. The funds are drawn from the project's operational liquidity budget specifically earmarked for market health activities.`,
 };
 
 export const MOCK_TRADES: Trade[] = [

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useState } from "react";
 import { createChart, LineSeries } from "lightweight-charts";
 import type { IChartApi, ISeriesApi, SeriesType, Time } from "lightweight-charts";
 import type { OHLCBar } from "@/lib/types";
@@ -26,6 +26,16 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
   const lastPass = passData[passData.length - 1];
   const lastFail = failData[failData.length - 1];
   const lastSpot = spotData[spotData.length - 1];
+
+  const [displayPass, setDisplayPass] = useState(lastPass?.close);
+  const [displayFail, setDisplayFail] = useState(lastFail?.close);
+  const [displaySpot, setDisplaySpot] = useState(lastSpot?.close);
+
+  const setMarkersAtTime = useCallback((time: Time) => {
+    passSeriesRef.current?.setMarkers([{ time, position: "inBar", color: "#8aea92", shape: "circle", size: 0.5 }]);
+    failSeriesRef.current?.setMarkers([{ time, position: "inBar", color: "#f7567c", shape: "circle", size: 0.5 }]);
+    spotSeriesRef.current?.setMarkers([{ time, position: "inBar", color: "#ffe5d9", shape: "circle", size: 0.5 }]);
+  }, []);
 
   const initChart = useCallback(() => {
     if (!containerRef.current) return;
@@ -57,14 +67,14 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
       lineWidth: 2,
       priceLineVisible: false,
       lastValueVisible: false,
-      crosshairMarkerBorderWidth: 0,
+      crosshairMarkerVisible: false,
     });
     const failSeries = chart.addSeries(LineSeries, {
       color: "#f7567c",
       lineWidth: 2,
       priceLineVisible: false,
       lastValueVisible: false,
-      crosshairMarkerBorderWidth: 0,
+      crosshairMarkerVisible: false,
     });
     const spotSeries = chart.addSeries(LineSeries, {
       color: "#ffe5d9",
@@ -72,7 +82,7 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
       lineStyle: 2,
       priceLineVisible: false,
       lastValueVisible: false,
-      crosshairMarkerBorderWidth: 0,
+      crosshairMarkerVisible: false,
     });
 
     passSeries.setData(toLineData(passData));
@@ -91,11 +101,27 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
   useEffect(() => {
     const chart = initChart();
     if (!chart) return;
+
+    // Show dots at last data point by default
+    if (lastPass) setMarkersAtTime(lastPass.time as Time);
+
+    chart.subscribeCrosshairMove((param) => {
+      const p = passSeriesRef.current ? param.seriesData.get(passSeriesRef.current) : undefined;
+      const f = failSeriesRef.current ? param.seriesData.get(failSeriesRef.current) : undefined;
+      const s = spotSeriesRef.current ? param.seriesData.get(spotSeriesRef.current) : undefined;
+
+      if (p && "value" in p) setDisplayPass(p.value as number);
+      if (f && "value" in f) setDisplayFail(f.value as number);
+      if (s && "value" in s) setDisplaySpot(s.value as number);
+
+      if (param.time) setMarkersAtTime(param.time as Time);
+    });
+
     return () => {
       chart.remove();
       chartRef.current = null;
     };
-  }, [initChart]);
+  }, [initChart, lastPass, setMarkersAtTime]);
 
   useEffect(() => {
     if (!containerRef.current || !chartRef.current) return;
@@ -126,28 +152,28 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
       {/* Legend */}
       <div className="flex gap-[15px] items-center px-px py-[5px] w-full">
         <div className="flex gap-[6px] items-center py-3 rounded-[4px]">
-          <div className="bg-[#8aea92] size-[6px] shrink-0" />
+          <div className="bg-[#8aea92] size-[6px] shrink-0 rounded-full" />
           <span className="text-[12px] text-[#a99986] leading-none whitespace-nowrap">
             <span className="font-['IBM_Plex_Mono',monospace] font-medium text-[#8aea92]">
-              ${lastPass?.close.toFixed(4)}
+              ${displayPass?.toFixed(4)}
             </span>
             {" if approved"}
           </span>
         </div>
         <div className="flex gap-[6px] items-center py-3 rounded-[4px]">
-          <div className="bg-[#f7567c] size-[6px] shrink-0" />
+          <div className="bg-[#f7567c] size-[6px] shrink-0 rounded-full" />
           <span className="text-[12px] text-[#a99986] leading-none whitespace-nowrap">
             <span className="font-['IBM_Plex_Mono',monospace] font-medium text-[#f7567c]">
-              {lastFail?.close.toFixed(4)}
+              {displayFail?.toFixed(4)}
             </span>
             {" if rejected"}
           </span>
         </div>
         <div className="flex gap-[6px] items-center py-3 rounded-[4px]">
-          <div className="bg-[#ffe5d9] size-[6px] shrink-0" />
+          <div className="bg-[#ffe5d9] size-[6px] shrink-0 rounded-full" />
           <span className="text-[12px] text-[#a99986] leading-none whitespace-nowrap">
             <span className="font-['IBM_Plex_Mono',monospace] font-medium text-[#ffe5d9]">
-              {lastSpot?.close.toFixed(4)}
+              {displaySpot?.toFixed(4)}
             </span>
             {" spot price"}
           </span>

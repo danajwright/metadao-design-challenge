@@ -33,17 +33,17 @@ export default function ProposalPage() {
                 </span>
               </div>
               {/* Wallet button */}
-              <div className="bg-[#1a1a1a] rounded-[4.8px] h-9 w-[108px] flex items-center px-3 relative hover:bg-[#2e2924] cursor-pointer transition-colors duration-150 ease-in-out">
-                <span className="text-[12px] text-[#b3afac] leading-[18px] text-center flex-1">
+              <div className="group bg-[#1a1a1a] rounded-[4.8px] h-9 w-[108px] flex items-center px-3 relative hover:bg-[#2e2924] cursor-pointer transition-colors duration-150 ease-in-out">
+                <span className="text-[12px] text-[#b3afac] leading-[18px] text-center flex-1 transition-colors duration-150 ease-in-out group-hover:text-white">
                   8Cw...dhq
                 </span>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/assets/icon-chevron.svg" alt="" width={12} height={12} />
+                <img src="/assets/icon-chevron.svg" alt="" width={12} height={12} className="transition-all duration-150 ease-in-out group-hover:brightness-0 group-hover:invert" />
               </div>
               {/* Theme toggle */}
-              <div className="bg-[#1a1a1a] rounded-[4.8px] size-9 flex items-center justify-center hover:bg-[#2e2924] cursor-pointer transition-colors duration-150 ease-in-out">
+              <div className="group bg-[#1a1a1a] rounded-[4.8px] size-9 flex items-center justify-center hover:bg-[#2e2924] cursor-pointer transition-colors duration-150 ease-in-out">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/assets/light-mode2.svg" alt="Toggle light mode" width={16} height={16} />
+                <img src="/assets/light-mode2.svg" alt="Toggle light mode" width={16} height={16} className="transition-all duration-150 ease-in-out group-hover:brightness-0 group-hover:invert" />
               </div>
             </div>
           </div>

@@ -60,7 +60,7 @@ export function ProposalHeader({ proposal }: { proposal: Proposal }) {
 
         {/* MetaDAO watermark */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/assets/metadao-watermark.svg" alt="" className="absolute right-6 top-[37.5px] h-[190px] w-[230px] object-contain object-right pointer-events-none opacity-30" />
+        <img src="/assets/metadao-watermark.svg" alt="" className="absolute right-0 bottom-0 w-[230px] h-[190px] pointer-events-none" />
       </div>
     </div>
   );

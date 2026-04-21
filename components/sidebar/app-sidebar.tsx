@@ -32,14 +32,20 @@ export function AppSidebar() {
         {navItems.map((item) => (
           <button
             key={item.label}
-            className={`flex gap-[9px] items-center px-3 py-[10px] rounded-[5px] w-full text-left hover:bg-[#2e2924] cursor-pointer transition-colors duration-150 ease-in-out ${
+            className={`group flex gap-[9px] items-center px-3 py-[10px] rounded-[5px] w-full text-left hover:bg-[#2e2924] cursor-pointer transition-colors duration-150 ease-in-out ${
               item.active ? "bg-[#2e2924]" : ""
             }`}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={item.icon} alt="" width={16} height={16} className="shrink-0" />
+            <img
+              src={item.icon}
+              alt=""
+              width={16}
+              height={16}
+              className="shrink-0 transition-all duration-150 ease-in-out group-hover:brightness-0 group-hover:invert"
+            />
             <span
-              className={`text-[12px] leading-4 w-[118px] ${
+              className={`text-[12px] leading-4 w-[118px] transition-colors duration-150 ease-in-out group-hover:text-white ${
                 item.active ? "text-white" : "text-[#a99986]"
               }`}
             >
@@ -59,11 +65,19 @@ export function AppSidebar() {
         {howItWorksItems.map((item) => (
           <button
             key={item.label}
-            className="flex gap-[9px] items-center px-3 py-[10px] rounded-[5px] w-full text-left hover:bg-[#2e2924] cursor-pointer transition-colors duration-150 ease-in-out"
+            className="group flex gap-[9px] items-center px-3 py-[10px] rounded-[5px] w-full text-left hover:bg-[#2e2924] cursor-pointer transition-colors duration-150 ease-in-out"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={item.icon} alt="" width={16} height={16} className="shrink-0" />
-            <span className="text-[12px] leading-4 text-[#a99986]">{item.label}</span>
+            <img
+              src={item.icon}
+              alt=""
+              width={16}
+              height={16}
+              className="shrink-0 transition-all duration-150 ease-in-out group-hover:brightness-0 group-hover:invert"
+            />
+            <span className="text-[12px] leading-4 text-[#a99986] transition-colors duration-150 ease-in-out group-hover:text-white">
+              {item.label}
+            </span>
           </button>
         ))}
       </div>
@@ -72,16 +86,16 @@ export function AppSidebar() {
 
       {/* Footer */}
       <div className="flex flex-col items-start px-3 pb-3 shrink-0">
-        <div className="bg-[#2b2621] flex items-center justify-between p-3 rounded-[5px] w-full hover:bg-[#2e2924] cursor-pointer transition-colors duration-150 ease-in-out">
+        <div className="group bg-[#2b2621] flex items-center justify-between p-3 rounded-[5px] w-full hover:bg-[#2e2924] cursor-pointer transition-colors duration-150 ease-in-out">
           <div className="flex flex-col gap-[10px] items-start">
-            <span className="text-[11px] text-[#a99986] leading-[10px]">Powered by</span>
+            <span className="text-[11px] text-[#a99986] leading-[10px] transition-colors duration-150 ease-in-out group-hover:text-white">Powered by</span>
             <div className="flex gap-[9px] items-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/assets/metadao-logo.png" alt="MetaDAO" width={16} height={16} className="object-cover" />
-              <span className="text-[12px] text-[#f7e7d3] leading-4 w-[118px]">MetaDAO</span>
+              <img src="/assets/metadao-logo.png" alt="MetaDAO" width={16} height={16} className="object-cover transition-all duration-150 ease-in-out group-hover:brightness-0 group-hover:invert" />
+              <span className="text-[12px] text-[#f7e7d3] leading-4 w-[118px] transition-colors duration-150 ease-in-out group-hover:text-white">MetaDAO</span>
             </div>
           </div>
-          <span className="text-[22px] text-[#a99986] self-end pb-0.5">↗</span>
+          <span className="text-[18px] text-[#a99986] self-end pb-0.5 transition-colors duration-150 ease-in-out group-hover:text-white">↗</span>
         </div>
       </div>
     </aside>
