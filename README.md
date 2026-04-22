@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MetaDAO Designer Challenge — P2P Buyback Program
 
-## Getting Started
+A redesign of MetaDAO's decision market trade page, built for the MetaDAO Designer Challenge.
 
-First, run the development server:
+**Live demo:** [metadao-design-challenge.vercel.app/proposals/p2p-001](https://metadao-design-challenge.vercel.app/proposals/p2p-001)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## The Challenge
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+MetaDAO is building towards internet capital markets that work. Their existing decision market trade page is functional but lacks the credibility and professionalism needed to earn the trust of founders and investors — not just traders.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The goal: redesign the page to feel clean, trustworthy, and compelling.
 
-## Learn More
+### Original design
 
-To learn more about Next.js, take a look at the following resources:
+![Original MetaDAO trade page](./public/assets/wireframe.jpeg)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Design brief
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+> *It's visually fine, but it doesn't come across as clean, professional, and credible as we'd like. It's not just about building a product that traders want to use, it's about building a product that founders and investors want to trust.*
 
-## Deploy on Vercel
+References cited: Bloomberg, Vanguard, Fidelity, EDGAR, Berkshire Hathaway, Sequoia, a16z, Circle, Squads, Ellipsis Labs, Jito.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## What I Built
+
+A proposal overview page for the **P2P Buyback Program** — the view a user lands on before trading. The design prioritizes legibility and credibility over density.
+
+### Features
+
+- **Proposal header** — status, title, volume, author, and proposal type with a MetaDAO watermark
+- **Proposal content** — structured markdown with section headers and body copy
+- **P2P price card** — live price with a 15-second countdown timer, looping price animation, and green/red flash on up/down moves
+- **Proposal results** — animated PASS/FAIL bars that play through the full OHLC price history on load, with ease-out timing. Price, market cap, and percentage all animate in sync
+- **Proposal trading chart** — three-line chart (pass, fail, spot) with persistent hover dots that snap back to line ends on mouse leave, custom date label on hover, no axes or crosshairs
+- **Frosted glass nav** — sticky header with backdrop blur so content scrolls behind it
+- **Hover states** — coordinated icon + text transitions throughout the sidebar and header
+
+### Tech stack
+
+- Next.js 16 (App Router)
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- [lightweight-charts](https://github.com/tradingview/lightweight-charts) v5 for the trading chart
+
+---
+
+## Background: How Conditional Markets Work
+
+MetaDAO's decision markets let users trade tokens conditional on a proposal passing or failing. If the proposal doesn't pass, trades are reverted — so prices reflect the market's belief in the outcome.
+
+- **Pass price** — implied token value if the proposal is approved
+- **Fail price** — implied token value if the proposal is rejected
+- **Spot price** — current market price regardless of outcome
+
+The ratio of pass to fail price gives a real-time probability estimate of whether a proposal will pass.
