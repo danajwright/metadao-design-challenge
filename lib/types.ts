@@ -15,6 +15,7 @@ export type Proposal = {
   project: string;
   status: ProposalStatus;
   createdAt: string;
+  tradingPeriod: string;
   endedAt: string | null;
   totalVolume: number;
   passMarket: ConditionalMarket;

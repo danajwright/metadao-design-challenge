@@ -1,9 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useCallback, useState } from "react";
-import { createChart, LineSeries } from "lightweight-charts";
-import type { IChartApi, ISeriesApi, SeriesType, Time } from "lightweight-charts";
+import { createChart, LineSeries, createSeriesMarkers } from "lightweight-charts";
+import type { IChartApi, ISeriesApi, ISeriesMarkersPluginApi, SeriesType, Time } from "lightweight-charts";
 import type { OHLCBar } from "@/lib/types";
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type MarkersPlugin = ISeriesMarkersPluginApi<any>;
 
 type Props = {
   passData: OHLCBar[];
@@ -22,6 +25,9 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
   const passSeriesRef = useRef<ISeriesApi<SeriesType> | null>(null);
   const failSeriesRef = useRef<ISeriesApi<SeriesType> | null>(null);
   const spotSeriesRef = useRef<ISeriesApi<SeriesType> | null>(null);
+  const passMarkersRef = useRef<MarkersPlugin | null>(null);
+  const failMarkersRef = useRef<MarkersPlugin | null>(null);
+  const spotMarkersRef = useRef<MarkersPlugin | null>(null);
 
   const lastPass = passData[passData.length - 1];
   const lastFail = failData[failData.length - 1];
@@ -32,9 +38,9 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
   const [displaySpot, setDisplaySpot] = useState(lastSpot?.close);
 
   const setMarkersAtTime = useCallback((time: Time) => {
-    passSeriesRef.current?.setMarkers([{ time, position: "inBar", color: "#8aea92", shape: "circle", size: 0.5 }]);
-    failSeriesRef.current?.setMarkers([{ time, position: "inBar", color: "#f7567c", shape: "circle", size: 0.5 }]);
-    spotSeriesRef.current?.setMarkers([{ time, position: "inBar", color: "#ffe5d9", shape: "circle", size: 0.5 }]);
+    passMarkersRef.current?.setMarkers([{ time, position: "inBar", color: "#8aea92", shape: "circle", size: 0.5 }]);
+    failMarkersRef.current?.setMarkers([{ time, position: "inBar", color: "#f7567c", shape: "circle", size: 0.5 }]);
+    spotMarkersRef.current?.setMarkers([{ time, position: "inBar", color: "#ffe5d9", shape: "circle", size: 0.5 }]);
   }, []);
 
   const initChart = useCallback(() => {
@@ -53,11 +59,11 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
         vertLines: { visible: false },
         horzLines: { visible: false },
       },
-      rightPriceScale: { borderColor: "#312d2a", textColor: "#6e6357" },
+      rightPriceScale: { visible: false },
       timeScale: { borderColor: "#312d2a", timeVisible: true, secondsVisible: false },
       crosshair: {
-        vertLine: { color: "#4b4540", width: 1 as const },
-        horzLine: { color: "#4b4540", width: 1 as const },
+        vertLine: { visible: false },
+        horzLine: { visible: false, labelVisible: false },
       },
       handleScale: { mouseWheel: false },
     });
@@ -94,6 +100,9 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
     passSeriesRef.current = passSeries;
     failSeriesRef.current = failSeries;
     spotSeriesRef.current = spotSeries;
+    passMarkersRef.current = createSeriesMarkers(passSeries, []);
+    failMarkersRef.current = createSeriesMarkers(failSeries, []);
+    spotMarkersRef.current = createSeriesMarkers(spotSeries, []);
 
     return chart;
   }, [passData, failData, spotData]);
@@ -110,16 +119,28 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
       const f = failSeriesRef.current ? param.seriesData.get(failSeriesRef.current) : undefined;
       const s = spotSeriesRef.current ? param.seriesData.get(spotSeriesRef.current) : undefined;
 
+      if (!param.time) {
+        // Mouse left — snap back to last data point
+        if (lastPass) setMarkersAtTime(lastPass.time as Time);
+        setDisplayPass(lastPass?.close);
+        setDisplayFail(lastFail?.close);
+        setDisplaySpot(lastSpot?.close);
+        return;
+      }
+
       if (p && "value" in p) setDisplayPass(p.value as number);
       if (f && "value" in f) setDisplayFail(f.value as number);
       if (s && "value" in s) setDisplaySpot(s.value as number);
 
-      if (param.time) setMarkersAtTime(param.time as Time);
+      setMarkersAtTime(param.time as Time);
     });
 
     return () => {
       chart.remove();
       chartRef.current = null;
+      passMarkersRef.current = null;
+      failMarkersRef.current = null;
+      spotMarkersRef.current = null;
     };
   }, [initChart, lastPass, setMarkersAtTime]);
 

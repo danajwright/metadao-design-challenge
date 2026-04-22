@@ -67,7 +67,7 @@ export default function ProposalPage() {
                 passData={MOCK_PASS_OHLC}
                 failData={MOCK_FAIL_OHLC}
                 spotData={MOCK_SPOT_OHLC}
-                createdAt={proposal.createdAt}
+                createdAt={proposal.tradingPeriod}
               />
             </div>
           </div>
