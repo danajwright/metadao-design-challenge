@@ -5,16 +5,16 @@ import remarkGfm from "remark-gfm";
 
 export function ProposalContent({ markdown }: { markdown: string }) {
   return (
-    <div className="flex flex-col gap-2 items-start py-[18px]">
+    <div className="flex flex-col gap-[7px] items-start py-[16px]">
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
           h3({ children, ...props }) {
             return (
-              <div className="flex flex-col gap-1 items-start justify-center w-full mt-5 first:mt-0">
+              <div className="flex flex-col gap-1 items-start justify-center w-full mt-[18px] first:mt-0">
                 <h3
                   {...props}
-                  className="font-semibold text-[16px] text-[#f4e4cf] leading-5 whitespace-nowrap"
+                  className="font-semibold text-[13px] text-[#f4e4cf] leading-[18px] whitespace-nowrap"
                 >
                   {children}
                 </h3>
@@ -25,7 +25,7 @@ export function ProposalContent({ markdown }: { markdown: string }) {
             return (
               <p
                 {...props}
-                className="text-[12px] text-[#a99986] leading-[22.75px] w-full"
+                className="text-[11px] text-[#a99986] leading-[20px] w-full"
               >
                 {children}
               </p>
@@ -40,7 +40,7 @@ export function ProposalContent({ markdown }: { markdown: string }) {
           },
           ul({ children, ...props }) {
             return (
-              <ul {...props} className="flex flex-col gap-3 items-start w-full">
+              <ul {...props} className="flex flex-col gap-[11px] items-start w-full">
                 {children}
               </ul>
             );
@@ -49,7 +49,7 @@ export function ProposalContent({ markdown }: { markdown: string }) {
             return (
               <li
                 {...props}
-                className="text-[12px] text-[#a99986] leading-[22.75px] list-disc ml-5"
+                className="text-[11px] text-[#a99986] leading-[20px] list-disc ml-[18px]"
               >
                 {children}
               </li>
@@ -57,7 +57,7 @@ export function ProposalContent({ markdown }: { markdown: string }) {
           },
           ol({ children, ...props }) {
             return (
-              <ol {...props} className="flex flex-col gap-3 items-start w-full">
+              <ol {...props} className="flex flex-col gap-[11px] items-start w-full">
                 {children}
               </ol>
             );

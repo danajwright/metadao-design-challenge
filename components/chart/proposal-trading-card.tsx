@@ -19,6 +19,11 @@ function toLineData(bars: OHLCBar[]) {
   return bars.map((b) => ({ time: b.time as Time, value: b.close }));
 }
 
+function formatTime(unixSeconds: number): string {
+  const d = new Date(unixSeconds * 1000);
+  return d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+}
+
 export function ProposalTradingCard({ passData, failData, spotData, createdAt }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<IChartApi | null>(null);
@@ -36,6 +41,7 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
   const [displayPass, setDisplayPass] = useState(lastPass?.close);
   const [displayFail, setDisplayFail] = useState(lastFail?.close);
   const [displaySpot, setDisplaySpot] = useState(lastSpot?.close);
+  const [dateLabel, setDateLabel] = useState<{ x: number; text: string } | null>(null);
 
   const setMarkersAtTime = useCallback((time: Time) => {
     passMarkersRef.current?.setMarkers([{ time, position: "inBar", color: "#8aea92", shape: "circle", size: 0.5 }]);
@@ -47,12 +53,12 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
     if (!containerRef.current) return;
     const chart = createChart(containerRef.current, {
       width: containerRef.current.clientWidth,
-      height: 150,
+      height: 135,
       layout: {
         background: { color: "#141211" },
         textColor: "#6e6357",
-        fontSize: 10,
-        fontFamily: "IBM Plex Mono, monospace",
+        fontSize: 11,
+        fontFamily: "Inter, sans-serif",
         attributionLogo: false,
       },
       grid: {
@@ -62,7 +68,7 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
       rightPriceScale: { visible: false },
       timeScale: { borderColor: "#312d2a", timeVisible: true, secondsVisible: false },
       crosshair: {
-        vertLine: { visible: false },
+        vertLine: { visible: false, labelVisible: false },
         horzLine: { visible: false, labelVisible: false },
       },
       handleScale: { mouseWheel: false },
@@ -111,7 +117,6 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
     const chart = initChart();
     if (!chart) return;
 
-    // Show dots at last data point by default
     if (lastPass) setMarkersAtTime(lastPass.time as Time);
 
     chart.subscribeCrosshairMove((param) => {
@@ -120,11 +125,11 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
       const s = spotSeriesRef.current ? param.seriesData.get(spotSeriesRef.current) : undefined;
 
       if (!param.time) {
-        // Mouse left — snap back to last data point
         if (lastPass) setMarkersAtTime(lastPass.time as Time);
         setDisplayPass(lastPass?.close);
         setDisplayFail(lastFail?.close);
         setDisplaySpot(lastSpot?.close);
+        setDateLabel(null);
         return;
       }
 
@@ -133,6 +138,13 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
       if (s && "value" in s) setDisplaySpot(s.value as number);
 
       setMarkersAtTime(param.time as Time);
+
+      if (param.point) {
+        setDateLabel({
+          x: param.point.x,
+          text: formatTime(param.time as number),
+        });
+      }
     });
 
     return () => {
@@ -142,7 +154,7 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
       failMarkersRef.current = null;
       spotMarkersRef.current = null;
     };
-  }, [initChart, lastPass, setMarkersAtTime]);
+  }, [initChart, lastPass, lastFail, lastSpot, setMarkersAtTime]);
 
   useEffect(() => {
     if (!containerRef.current || !chartRef.current) return;
@@ -158,41 +170,53 @@ export function ProposalTradingCard({ passData, failData, spotData, createdAt }:
   return (
     <div className="flex flex-col items-start">
       {/* Header */}
-      <div className="flex h-[76px] items-center justify-between py-6 w-full">
-        <span className="text-[18px] text-[#f7e7d3] leading-7 whitespace-nowrap">
+      <div className="flex h-[68px] items-center justify-between pt-[12px] pb-[5px] w-full">
+        <span className="text-[14px] text-[#f7e7d3] leading-[25px] whitespace-nowrap">
           Proposal trading
         </span>
-        <span className="text-[12px] text-[#a99986] leading-[18px] text-center whitespace-nowrap">
+        <span className="text-[11px] text-[#a99986] leading-[16px] text-center whitespace-nowrap">
           {createdAt}
         </span>
       </div>
 
       {/* Chart */}
-      <div ref={containerRef} className="w-full" />
+      <div className="relative w-full">
+        <div ref={containerRef} className="w-full" />
+        {dateLabel && (
+          <div
+            className="absolute z-10 pointer-events-none"
+            style={{ left: dateLabel.x, bottom: 27, transform: "translateX(-50%)" }}
+          >
+            <span className="text-[#a99986] text-[11px] font-['Inter',sans-serif] whitespace-nowrap">
+              {dateLabel.text}
+            </span>
+          </div>
+        )}
+      </div>
 
       {/* Legend */}
-      <div className="flex gap-[15px] items-center px-px py-[5px] w-full">
-        <div className="flex gap-[6px] items-center py-3 rounded-[4px]">
-          <div className="bg-[#8aea92] size-[6px] shrink-0 rounded-full" />
-          <span className="text-[12px] text-[#a99986] leading-none whitespace-nowrap">
+      <div className="flex gap-[14px] items-center px-px py-[5px] w-full">
+        <div className="flex gap-[5px] items-center py-[11px] rounded-[4px]">
+          <div className="bg-[#8aea92] size-[5px] shrink-0 rounded-full" />
+          <span className="text-[11px] text-[#a99986] leading-none whitespace-nowrap">
             <span className="font-['IBM_Plex_Mono',monospace] font-medium text-[#8aea92]">
               ${displayPass?.toFixed(4)}
             </span>
             {" if approved"}
           </span>
         </div>
-        <div className="flex gap-[6px] items-center py-3 rounded-[4px]">
-          <div className="bg-[#f7567c] size-[6px] shrink-0 rounded-full" />
-          <span className="text-[12px] text-[#a99986] leading-none whitespace-nowrap">
+        <div className="flex gap-[5px] items-center py-[11px] rounded-[4px]">
+          <div className="bg-[#f7567c] size-[5px] shrink-0 rounded-full" />
+          <span className="text-[11px] text-[#a99986] leading-none whitespace-nowrap">
             <span className="font-['IBM_Plex_Mono',monospace] font-medium text-[#f7567c]">
               {displayFail?.toFixed(4)}
             </span>
             {" if rejected"}
           </span>
         </div>
-        <div className="flex gap-[6px] items-center py-3 rounded-[4px]">
-          <div className="bg-[#ffe5d9] size-[6px] shrink-0 rounded-full" />
-          <span className="text-[12px] text-[#a99986] leading-none whitespace-nowrap">
+        <div className="flex gap-[5px] items-center py-[11px] rounded-[4px]">
+          <div className="bg-[#ffe5d9] size-[5px] shrink-0 rounded-full" />
+          <span className="text-[11px] text-[#a99986] leading-none whitespace-nowrap">
             <span className="font-['IBM_Plex_Mono',monospace] font-medium text-[#ffe5d9]">
               {displaySpot?.toFixed(4)}
             </span>
