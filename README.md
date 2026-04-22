@@ -1,6 +1,6 @@
-# MetaDAO Designer Challenge — P2P Buyback Program
+# MetaDAO Design Challenge
 
-A redesign of MetaDAO's decision market trade page, built for the MetaDAO Designer Challenge.
+A redesign of MetaDAO's decision market trade page.
 
 **Live demo:** [metadao-design-challenge.vercel.app/proposals/p2p-001](https://metadao-design-challenge.vercel.app/proposals/p2p-001)
 
